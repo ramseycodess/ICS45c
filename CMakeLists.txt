@@ -6,20 +6,24 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Source files for the word_count program
 set(WORD_COUNT_SRC_FILES
   src/word_count.cpp
-  src/word_count.hpp
 )
 add_executable(word_count ${WORD_COUNT_SRC_FILES} src/word_count_main.cpp)
 
+# Source files for the coins program
 set(COINS_SRC_FILES
   src/coins.cpp
-  src/coins.hpp
 )
 add_executable(coins_simple ${COINS_SRC_FILES} src/coins_simple.cpp)
 add_executable(coins_menu ${COINS_SRC_FILES} src/coins_menu.cpp)
 add_executable(coins_transfer ${COINS_SRC_FILES} src/coins_transfer.cpp)
 
+# Include directories
+include_directories(src)
+
+# GTest configuration
 find_package(GTest)
 if (GTest_FOUND)
   set(WORD_COUNT_TEST_FILES
@@ -27,7 +31,7 @@ if (GTest_FOUND)
   )
 
   add_executable(word_count_gtests gtest/gtestmain.cpp ${WORD_COUNT_SRC_FILES} ${WORD_COUNT_TEST_FILES})
-  target_include_directories(word_count_gtests PRIVATE src ${GTEST_INCLUDE_DIRS})
+  target_include_directories(word_count_gtests PRIVATE ${GTEST_INCLUDE_DIRS})
   target_link_libraries(word_count_gtests PRIVATE ${GTEST_LIBRARIES})
 
   set(COINS_TEST_FILES
@@ -35,10 +39,10 @@ if (GTest_FOUND)
   )
 
   add_executable(coins_gtests gtest/gtestmain.cpp ${COINS_SRC_FILES} ${COINS_TEST_FILES})
-  target_include_directories(coins_gtests PRIVATE src ${GTEST_INCLUDE_DIRS})
+  target_include_directories(coins_gtests PRIVATE ${GTEST_INCLUDE_DIRS})
   target_link_libraries(coins_gtests PRIVATE ${GTEST_LIBRARIES})
 
   add_executable(student_gtests gtest/gtestmain.cpp ${WORD_COUNT_SRC_FILES} src/student_gtests.cpp)
-  target_include_directories(student_gtests PRIVATE src ${GTEST_INCLUDE_DIRS})
+  target_include_directories(student_gtests PRIVATE ${GTEST_INCLUDE_DIRS})
   target_link_libraries(student_gtests PRIVATE ${GTEST_LIBRARIES})
 endif()
