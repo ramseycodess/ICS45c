@@ -44,4 +44,3 @@ TEST(WordCount, OutputWordCounts) {
   output_word_counts(word_counts, output);
   EXPECT_STREQ(output.str().c_str(), "bar 5\nfoo 1\nxy 3\n");
 }
-
